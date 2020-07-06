@@ -23,21 +23,17 @@ public class ItemInfo {
 
     private Integer inventory;
 
-    private LocalDateTime estimatedArrival;
-
-
     @Builder
-    public ItemInfo(String name, String description, String distributor, Integer price, Integer inventory, LocalDateTime estimatedArrival) {
+    public ItemInfo(String name, String description, String distributor, Integer price, Integer inventory) {
         this.name = name;
         this.description = description;
         this.distributor = distributor;
         this.price = price;
         this.inventory = inventory;
-        this.estimatedArrival = estimatedArrival;
     }
 
     public Item toEntity(){
-        return new Item(name, description, distributor, price, inventory, estimatedArrival);
+        return new Item(name, description, distributor, price, inventory);
     }
 
     @Override
@@ -48,7 +44,6 @@ public class ItemInfo {
                 ", distributor='" + distributor + '\'' +
                 ", price=" + price +
                 ", inventory=" + inventory +
-                ", estimatedArrival=" + estimatedArrival +
                 '}';
     }
 }
