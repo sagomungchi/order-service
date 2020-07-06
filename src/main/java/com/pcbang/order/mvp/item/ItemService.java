@@ -1,0 +1,49 @@
+package com.pcbang.order.mvp.item;
+
+import com.pcbang.order.mvp.domain.item.Item;
+import com.pcbang.order.mvp.domain.item.dto.ItemInfo;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class ItemService {
+
+    private final ItemRepository itemRepository;
+    private ModelMapper modelMapper;
+
+    public ItemService(ItemRepository itemRepository, ModelMapper modelMapper) {
+        this.itemRepository = itemRepository;
+        this.modelMapper = modelMapper;
+    }
+
+    public Long save(ItemInfo itemInfo) {
+        Item item = itemInfo.toEntity();
+        return itemRepository.save(item).getId();
+    }
+
+    @Transactional(readOnly = true)
+    public List<ItemInfo> findAll() {
+        return itemRepository.findAll().stream()
+                .map(item -> modelMapper.map(item, ItemInfo.class))
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public ItemInfo findById(Long id) {
+        Item item = itemRepository.findById(id).orElseThrow(NotFoundItemException::new);
+        return modelMapper.map(item, ItemInfo.class);
+    }
+
+    public Long updateItem(Long id, ItemInfo itemInfo) {
+        Item item = itemRepository.findById(id).orElseThrow(NotFoundItemException::new);
+        return item.updateTo(itemInfo);
+    }
+
+    public void deleteItem(Long id) {
+        itemRepository.deleteById(id);
+    }
+}
