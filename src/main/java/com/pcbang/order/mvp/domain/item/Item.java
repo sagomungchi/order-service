@@ -41,12 +41,11 @@ public class Item {
         this.inventory = inventory;
     }
 
-    public Long updateTo(ItemInfo itemInfo) {
+    public void updateTo(ItemInfo itemInfo) {
         this.name = itemInfo.getName();
         this.description = itemInfo.getDescription();
         this.distributor = itemInfo.getDistributor();
         this.price = itemInfo.getPrice();
         this.inventory = itemInfo.getInventory();
-        return id;
     }
 }

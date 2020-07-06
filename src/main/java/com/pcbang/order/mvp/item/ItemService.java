@@ -2,6 +2,7 @@ package com.pcbang.order.mvp.item;
 
 import com.pcbang.order.mvp.domain.item.Item;
 import com.pcbang.order.mvp.domain.item.dto.ItemInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class ItemService {
 
@@ -38,9 +40,9 @@ public class ItemService {
         return modelMapper.map(item, ItemInfo.class);
     }
 
-    public Long updateItem(Long id, ItemInfo itemInfo) {
+    public void updateItem(Long id, ItemInfo itemInfo) {
         Item item = itemRepository.findById(id).orElseThrow(NotFoundItemException::new);
-        return item.updateTo(itemInfo);
+        item.updateTo(itemInfo);
     }
 
     public void deleteItem(Long id) {
