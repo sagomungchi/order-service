@@ -8,6 +8,8 @@ group = 'com.pcbang.order'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
+apply plugin: 'war'
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -31,6 +33,10 @@ dependencies {
     compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.1.5.Final'
     compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
     compile 'com.h2database:h2'
+    compile 'io.springfox:springfox-swagger2:2.6.1'
+    compile 'io.springfox:springfox-swagger-ui:2.6.1'
+
+
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
@@ -42,4 +48,10 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+bootWar {
+    archiveBaseName = "test-api"
+    archiveFileName = "test-api.war"
+    archiveVersion = "0.0.0"
 }
