@@ -17,12 +17,12 @@ public class ItemInfo {
 
     private String distributor;
 
-    private Integer price;
+    private int price;
 
-    private Integer inventory;
+    private int inventory;
 
     @Builder
-    public ItemInfo(String name, String description, String distributor, Integer price, Integer inventory) {
+    public ItemInfo(String name, String description, String distributor, int price, int inventory) {
         this.name = name;
         this.description = description;
         this.distributor = distributor;
