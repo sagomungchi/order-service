@@ -6,10 +6,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
+
 @Getter
+@Embeddable
 @NoArgsConstructor
-public class Cart {
+public class OrderLine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,7 +22,7 @@ public class Cart {
 
     private int quantity;
 
-    public Cart(Item item, int quantity){
+    public OrderLine(Item item, int quantity){
         this.item = item;
         this.quantity = quantity;
     }
