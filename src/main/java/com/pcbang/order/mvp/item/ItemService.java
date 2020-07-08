@@ -27,17 +27,30 @@ public class ItemService {
         return itemRepository.save(item).getId();
     }
 
+//    @Transactional(readOnly = true)
+//    public List<ItemInfo> findAll() {
+//        return itemRepository.findAll().stream()
+//                .map(item -> modelMapper.map(item, ItemInfo.class))
+//                .collect(Collectors.toList());
+//    }
+
     @Transactional(readOnly = true)
-    public List<ItemInfo> findAll() {
+    public List<Item> findAll() {
         return itemRepository.findAll().stream()
-                .map(item -> modelMapper.map(item, ItemInfo.class))
+                .map(item -> modelMapper.map(item, Item.class))
                 .collect(Collectors.toList());
     }
 
+//    @Transactional(readOnly = true)
+//    public ItemInfo findById(Long id) {
+//        Item item = itemRepository.findById(id).orElseThrow(NotFoundItemException::new);
+//        return modelMapper.map(item, ItemInfo.class);
+//    }
+
     @Transactional(readOnly = true)
-    public ItemInfo findById(Long id) {
+    public Item findById(Long id) {
         Item item = itemRepository.findById(id).orElseThrow(NotFoundItemException::new);
-        return modelMapper.map(item, ItemInfo.class);
+        return modelMapper.map(item, Item.class);
     }
 
     public void updateItem(Long id, ItemInfo itemInfo) {
