@@ -1,5 +1,6 @@
 package com.pcbang.order.mvp.item;
 
+import com.pcbang.order.mvp.domain.item.Item;
 import com.pcbang.order.mvp.domain.item.dto.ItemInfo;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -31,24 +32,44 @@ public class ItemController {
         return ResponseEntity.created(URI.create("/items/" + id)).build();
     }
 
+//    @GetMapping
+//    @ApiOperation(value = "전체 상품 목록 가져오기", tags = "item")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "가져오기 성공"),
+//    })
+//    public ResponseEntity<List<ItemInfo>> showAllItemInfo() {
+//        List<ItemInfo> itemInfos = itemService.findAll();
+//        return ResponseEntity.ok(itemInfos);
+//    }
+
     @GetMapping
     @ApiOperation(value = "전체 상품 목록 가져오기", tags = "item")
     @ApiResponses({
             @ApiResponse(code = 200, message = "가져오기 성공"),
     })
-    public ResponseEntity<List<ItemInfo>> showAllItemInfo() {
-        List<ItemInfo> itemInfos = itemService.findAll();
+    public ResponseEntity<List<Item>> showAllItemInfo() {
+        List<Item> itemInfos = itemService.findAll();
         return ResponseEntity.ok(itemInfos);
     }
+
+//    @GetMapping("/{id}")
+//    @ApiOperation(value = "상품 상세 정보 가져오기", tags = "item")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "가져오기 성공"),
+//    })
+//    public ResponseEntity<ItemInfo> showItemInfo(@PathVariable Long id){
+//        ItemInfo itemInfo = itemService.findById(id);
+//        return ResponseEntity.ok(itemInfo);
+//    }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "상품 상세 정보 가져오기", tags = "item")
     @ApiResponses({
             @ApiResponse(code = 200, message = "가져오기 성공"),
     })
-    public ResponseEntity<ItemInfo> showItemInfo(@PathVariable Long id){
-        ItemInfo itemInfo = itemService.findById(id);
-        return ResponseEntity.ok(itemInfo);
+    public ResponseEntity<Item> showItemInfo(@PathVariable Long id){
+        Item item = itemService.findById(id);
+        return ResponseEntity.ok(item);
     }
 
     @PostMapping("/{id}")
