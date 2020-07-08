@@ -2,12 +2,14 @@ package com.pcbang.order.mvp.order;
 
 import com.pcbang.order.mvp.domain.order.dto.OrderInfo;
 import com.pcbang.order.mvp.domain.order.dto.OrderRequests;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
 
+@Slf4j
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/orders")
@@ -20,9 +22,10 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity purchase(@ModelAttribute OrderRequests orderRequests){
-        Long id = orderService.orderItem(orderRequests.getRequests());
-        return ResponseEntity.created(URI.create("/carts/" + id)).build();
+    public ResponseEntity purchase(@RequestBody OrderRequests orderRequests){
+        log.info(orderRequests.toString());
+        Long id = orderService.orderItem(orderRequests);
+        return ResponseEntity.created(URI.create("/orders/" + id)).build();
     }
 
     @GetMapping
@@ -37,15 +40,15 @@ public class OrderController {
         return ResponseEntity.ok(orderInfo);
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity updateOrder(@PathVariable Long id, @ModelAttribute OrderInfo orderInfo){
-        orderService.updateOrder(id, orderInfo);
-        return ResponseEntity.noContent().build();
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity deleteOrder(@PathVariable Long id){
         orderService.deleteOrder(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity updateOrder(@PathVariable Long id){
+        OrderInfo orderInfo = orderService.findById(id);
+        return ResponseEntity.ok(orderInfo);
     }
 }
