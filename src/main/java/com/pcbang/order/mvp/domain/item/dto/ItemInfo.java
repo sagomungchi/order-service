@@ -34,7 +34,7 @@ public class ItemInfo {
     }
 
     public Item toEntity(){
-        return new Item(name, description, imageURL, distributor, price, inventory);
+        return new Item(name, description, distributor, imageURL, price, inventory);
     }
 
     @Override
@@ -43,6 +43,7 @@ public class ItemInfo {
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", distributor='" + distributor + '\'' +
+                ", imageURL='" + imageURL + '\'' +
                 ", price=" + price +
                 ", inventory=" + inventory +
                 '}';

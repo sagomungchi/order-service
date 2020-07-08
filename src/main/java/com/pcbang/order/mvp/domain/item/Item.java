@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(name = "item_table")
 public class Item {
 
     @Id
@@ -44,5 +45,18 @@ public class Item {
         this.imageURL = itemInfo.getImageURL();
         this.price = itemInfo.getPrice();
         this.inventory = itemInfo.getInventory();
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", distributor='" + distributor + '\'' +
+                ", imageURL='" + imageURL + '\'' +
+                ", price=" + price +
+                ", inventory=" + inventory +
+                '}';
     }
 }
