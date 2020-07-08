@@ -27,8 +27,8 @@ public class SwaggerConfig {
 
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.pcbang.order.mvp.item"))
-                .paths(PathSelectors.ant("/items/**"))
+                .apis(RequestHandlerSelectors.basePackage("com.pcbang.order.mvp"))
+                .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo(title, version));
     }
