@@ -1,4 +1,4 @@
-package com.pcbang.order.mvp.domain.cart;
+package com.pcbang.order.mvp.domain.order;
 
 import com.pcbang.order.mvp.domain.item.Item;
 import lombok.Getter;

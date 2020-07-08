@@ -1,4 +1,4 @@
-package com.pcbang.order.mvp.domain.cart;
+package com.pcbang.order.mvp.domain.order;
 
 public enum OrderState {
     Cancel, // 취소

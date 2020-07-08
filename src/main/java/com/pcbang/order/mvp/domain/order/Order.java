@@ -1,6 +1,6 @@
-package com.pcbang.order.mvp.domain.cart;
+package com.pcbang.order.mvp.domain.order;
 
-import com.pcbang.order.mvp.domain.cart.dto.CartInfo;
+import com.pcbang.order.mvp.domain.order.dto.OrderInfo;
 import com.pcbang.order.mvp.domain.item.Item;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Cart {
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class Cart {
     @ElementCollection
     @CollectionTable(
             name = "order_line",
-            joinColumns = @JoinColumn(name = "cart_id")
+            joinColumns = @JoinColumn(name = "order_id")
     )
     private List<OrderLine> orderLines;
 
@@ -32,7 +32,7 @@ public class Cart {
 
     private LocalDateTime orderDate;
 
-    public Cart(List<OrderLine> orderLines, LocalDateTime orderDate) {
+    public Order(List<OrderLine> orderLines, LocalDateTime orderDate) {
         this.orderLines = orderLines;
         this.orderDate = orderDate;
         this.orderState = OrderState.OrderWait;
@@ -55,10 +55,10 @@ public class Cart {
         this.orderState = OrderState.Cancel;
     }
 
-    public Long updateTo(CartInfo cartInfo) {
-        this.orderLines = cartInfo.getOrderLines();
-        this.orderState = cartInfo.getOrderState();
-        this.orderDate = cartInfo.getOrderDate();
+    public Long updateTo(OrderInfo orderInfo) {
+        this.orderLines = orderInfo.getOrderLines();
+        this.orderState = orderInfo.getOrderState();
+        this.orderDate = orderInfo.getOrderDate();
         return id;
     }
 }
