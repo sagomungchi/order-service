@@ -1,5 +1,6 @@
 package com.pcbang.order.mvp.domain.cart;
 
+import com.pcbang.order.mvp.domain.cart.dto.CartInfo;
 import com.pcbang.order.mvp.domain.item.Item;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,11 +16,14 @@ import java.util.List;
 public class Cart {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ElementCollection
-    @CollectionTable(name = "order_line", joinColumns = @JoinColumn(name = "order_id"))
+    @CollectionTable(
+            name = "order_line",
+            joinColumns = @JoinColumn(name = "cart_id")
+    )
     private List<OrderLine> orderLines;
 
     @Enumerated
@@ -49,5 +53,12 @@ public class Cart {
 
     public void cancelOrder(){
         this.orderState = OrderState.Cancel;
+    }
+
+    public Long updateTo(CartInfo cartInfo) {
+        this.orderLines = cartInfo.getOrderLines();
+        this.orderState = cartInfo.getOrderState();
+        this.orderDate = cartInfo.getOrderDate();
+        return id;
     }
 }

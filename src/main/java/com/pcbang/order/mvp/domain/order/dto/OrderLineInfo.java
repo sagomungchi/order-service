@@ -20,7 +20,15 @@ public class OrderLineInfo {
         this.quantity = quantity;
     }
 
-    public OrderLine toEntity(Item item, int quantity){
+    public OrderLine toEntity(){
         return new OrderLine(item, quantity);
+    }
+
+    @Override
+    public String toString() {
+        return "OrderLineInfo{" +
+                "item=" + item +
+                ", quantity=" + quantity +
+                '}';
     }
 }

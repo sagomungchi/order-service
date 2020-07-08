@@ -12,10 +12,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class OrderLine {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
     @ManyToOne
     @JoinColumn(name = "item_id")
     private Item item;
