@@ -1,11 +1,14 @@
 package com.pcbang.order.mvp.order;
 
 import com.pcbang.order.mvp.domain.order.Order;
+import com.pcbang.order.mvp.domain.order.OrderState;
 import com.pcbang.order.mvp.domain.order.dto.OrderInfo;
 import com.pcbang.order.mvp.domain.order.dto.OrderLineInfo;
 import com.pcbang.order.mvp.domain.item.Item;
+import com.pcbang.order.mvp.domain.order.dto.OrderRequests;
 import com.pcbang.order.mvp.item.ItemRepository;
 import com.pcbang.order.mvp.item.NotFoundItemException;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,16 +17,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class OrderService {
 
     private final OrderRepository orderRepository;
-    private final ItemRepository itemRepository;
     private final ModelMapper modelMapper;
 
-    public OrderService(OrderRepository orderRepository, ItemRepository itemRepository, ModelMapper modelMapper) {
+    public OrderService(OrderRepository orderRepository, ModelMapper modelMapper) {
         this.orderRepository = orderRepository;
-        this.itemRepository = itemRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -33,17 +35,9 @@ public class OrderService {
     }
 
     @Transactional
-    public Long orderItem(List<OrderLineInfo> orderLineInfos){
-        Order order = new Order(null, LocalDateTime.now());
-
-        for (OrderLineInfo orderLineInfo : orderLineInfos){
-            Item item = itemRepository.findById(orderLineInfo.getItem().getId()).orElseThrow(NotFoundItemException::new);
-            try {
-                order.addOrderLine(item, orderLineInfo.getQuantity());
-            } catch (Exception e) {
-
-            }
-        }
+    public Long orderItem(OrderRequests orderRequests){
+        log.info("Request :" + orderRequests.toString());
+        Order order = new Order(orderRequests.toEntity(), LocalDateTime.now());
         return orderRepository.save(order).getId();
     }
 
@@ -58,11 +52,6 @@ public class OrderService {
     public OrderInfo findById(Long id) {
         Order order = orderRepository.findById(id).orElseThrow(NotFoundOrderException::new);
         return modelMapper.map(order, OrderInfo.class);
-    }
-
-    public void updateOrder(Long id, OrderInfo orderInfo) {
-        Order order = orderRepository.findById(id).orElseThrow(NotFoundOrderException::new);
-        order.updateTo(orderInfo);
     }
 
     public void deleteOrder(Long id) {

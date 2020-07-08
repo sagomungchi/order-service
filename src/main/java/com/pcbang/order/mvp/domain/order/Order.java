@@ -13,18 +13,19 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(name = "order_table")
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ElementCollection
     @CollectionTable(
-            name = "order_line",
+            name = "order_item_table",
             joinColumns = @JoinColumn(name = "order_id")
     )
-    private List<OrderLine> orderLines;
+    private List<OrderLine> orderItems;
 
     @Enumerated
     @JoinColumn(name = "order_state")
@@ -32,13 +33,13 @@ public class Order {
 
     private LocalDateTime orderDate;
 
-    public Order(List<OrderLine> orderLines, LocalDateTime orderDate) {
-        this.orderLines = orderLines;
+    public Order(List<OrderLine> orderItems, LocalDateTime orderDate) {
+        this.orderItems = orderItems;
         this.orderDate = orderDate;
         this.orderState = OrderState.OrderWait;
 
-        if(orderLines == null){
-            this.orderLines = new ArrayList<OrderLine>();
+        if(orderItems == null){
+            this.orderItems = new ArrayList<OrderLine>();
         }
     }
 
@@ -48,7 +49,7 @@ public class Order {
     }
 
     public void addOrderLine(OrderLine orderLine){
-        this.orderLines.add(orderLine);
+        this.orderItems.add(orderLine);
     }
 
     public void cancelOrder(){
@@ -56,9 +57,18 @@ public class Order {
     }
 
     public Long updateTo(OrderInfo orderInfo) {
-        this.orderLines = orderInfo.getOrderLines();
         this.orderState = orderInfo.getOrderState();
         this.orderDate = orderInfo.getOrderDate();
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", orderLines=" + orderItems +
+                ", orderState=" + orderState +
+                ", orderDate=" + orderDate +
+                '}';
     }
 }

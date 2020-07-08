@@ -12,15 +12,15 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class OrderRequests {
-    private List<OrderLineInfo> requests = new ArrayList<>();
+    private List<OrderLineInfo> orderItems = new ArrayList<>();
 
     public void addRequest(OrderLineInfo orderLineInfo){
-        requests.add(orderLineInfo);
+        orderItems.add(orderLineInfo);
     }
 
     public List<OrderLine> toEntity(){
         List<OrderLine> orderLines = new ArrayList<>();
-        requests.forEach(orderLineInfo -> {
+        orderItems.forEach(orderLineInfo -> {
             orderLines.add(orderLineInfo.toEntity());
         });
         return orderLines;
@@ -29,7 +29,7 @@ public class OrderRequests {
     @Override
     public String toString() {
         return "OrderRequests{" +
-                "requests=" + requests +
+                "orderItems=" + orderItems +
                 '}';
     }
 }
