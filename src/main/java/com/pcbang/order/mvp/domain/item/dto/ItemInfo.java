@@ -17,21 +17,24 @@ public class ItemInfo {
 
     private String distributor;
 
+    private String imageURL;
+
     private int price;
 
     private int inventory;
 
     @Builder
-    public ItemInfo(String name, String description, String distributor, int price, int inventory) {
+    public ItemInfo(String name, String description, String distributor, String imageURL, int price, int inventory) {
         this.name = name;
         this.description = description;
         this.distributor = distributor;
+        this.imageURL = imageURL;
         this.price = price;
         this.inventory = inventory;
     }
 
     public Item toEntity(){
-        return new Item(name, description, distributor, price, inventory);
+        return new Item(name, description, imageURL, distributor, price, inventory);
     }
 
     @Override

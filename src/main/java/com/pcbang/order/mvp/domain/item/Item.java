@@ -22,14 +22,17 @@ public class Item {
 
     private String distributor;
 
+    private String imageURL;
+
     private int price;
 
     private int inventory;
 
-    public Item(String name, String description, String distributor, int price, int inventory){
+    public Item(String name, String description, String distributor, String imageURL, int price, int inventory){
         this.name = name;
         this.description = description;
         this.distributor = distributor;
+        this.imageURL = imageURL;
         this.price = price;
         this.inventory = inventory;
     }
@@ -38,6 +41,7 @@ public class Item {
         this.name = itemInfo.getName();
         this.description = itemInfo.getDescription();
         this.distributor = itemInfo.getDistributor();
+        this.imageURL = itemInfo.getImageURL();
         this.price = itemInfo.getPrice();
         this.inventory = itemInfo.getInventory();
     }
